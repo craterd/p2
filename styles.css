@@ -1,4 +1,16 @@
+@charset "utf-8";
+
 body {
     text-align: center; 
     transform: translateY(10%);
+}
+
+label {
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+#operation {
+    padding-left: 10px;
+    padding-right: 10px;
 }
