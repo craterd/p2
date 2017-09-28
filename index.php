@@ -19,7 +19,7 @@
 
         <!-- display first input box, sanitizing any input value -->
         <label>Input 1:
-            <input type='text' name='Input1' <?php if (is_numeric($_GET['Input1'])) echo "value=" . sanitize($_GET['Input1'])?>>
+            <input type='text' name='Input1' <?php if (isset($_GET['Input1']) && is_numeric($_GET['Input1'])) echo "value=" . sanitize($_GET['Input1'])?>>
         </label>
 
         <!-- display operation dropdown -->
@@ -33,7 +33,7 @@
 
         <!-- display second input box, sanitizing any input value -->
         <label>Input 2:
-            <input type='text' name='Input2' <?php if (is_numeric($_GET['Input2'])) echo "value=" . sanitize($_GET['Input2'])?>>
+            <input type='text' name='Input2' <?php if (isset($_GET['Input2']) && is_numeric($_GET['Input2'])) echo "value=" . sanitize($_GET['Input2'])?>>
         </label>
         <br><br>
 
