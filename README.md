@@ -1,4 +1,4 @@
-# p1
-DWA Fall 2017 Project 1
+# p2
+DWA Fall 2017 Project 2
 
 Dave Crater
