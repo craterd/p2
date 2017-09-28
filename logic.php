@@ -32,8 +32,8 @@ if (!isset($_GET['decimals'])) {
 if ($returnFlag) { return; }
 
 // now do the math and signal an info alert with the answer
-$input1 = (float) $_GET['Input1'];
-$input2 = (float) $_GET['Input2'];
+$input1 = (float) sanitize($_GET['Input1']);
+$input2 = (float) sanitize($_GET['Input2']);
 $alertType = 'alert-info';
 
 if (!isset($_GET['decimals'])) {

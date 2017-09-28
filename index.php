@@ -17,9 +17,9 @@
 
     <form method='GET' action='index.php'>
 
-        <!-- display first input box -->
+        <!-- display first input box, sanitizing any input value -->
         <label>Input 1:
-            <input type='text' name='Input1' <?php if (is_numeric($_GET['Input1'])) echo ("value=" . $_GET['Input1'])?>>
+            <input type='text' name='Input1' <?php if (is_numeric($_GET['Input1'])) echo "value=" . sanitize($_GET['Input1'])?>>
         </label>
 
         <!-- display operation dropdown -->
@@ -31,9 +31,9 @@
             <option value='/' <?php if ($operation == '/') echo 'SELECTED'?>>/</option>
          </select>
 
-        <!-- display second input box -->
+        <!-- display second input box, sanitizing any input value -->
         <label>Input 2:
-            <input type='text' name='Input2' <?php if (is_numeric($_GET['Input2'])) echo ("value=" . $_GET['Input2'])?>>
+            <input type='text' name='Input2' <?php if (is_numeric($_GET['Input2'])) echo "value=" . sanitize($_GET['Input2'])?>>
         </label>
         <br><br>
 
