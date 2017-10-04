@@ -17,29 +17,29 @@
 
     <form method='GET' action='index.php'>
 
-        <!-- display first input box, sanitizing any input value -->
+        <!-- display first input box, retaining any valid input value, sanitized of course -->
         <label>Input 1:
-            <input type='text' name='Input1' <?php if (isset($_GET['Input1']) && is_numeric($_GET['Input1'])) echo "value=" . sanitize($_GET['Input1'])?>>
+            <input type='text' name='input1' <?php if (isset($_GET['input1']) && is_numeric($_GET['input1'])) echo "value=" . sanitize($_GET['input1'])?>>
         </label>
 
         <!-- display operation dropdown -->
         <select name='operation' id='operation'>
-            <option value='choose'<?php if ($operation == '+') echo 'SELECTED'?>>choose</option>
+            <option value='choose'<?php if ($operation == 'choose') echo 'SELECTED'?>>choose</option>
             <option value='+' <?php if ($operation == '+') echo 'SELECTED'?>>+</option>
             <option value='-' <?php if ($operation == '-') echo 'SELECTED'?>>-</option>
             <option value='*' <?php if ($operation == '*') echo 'SELECTED'?>>*</option>
             <option value='/' <?php if ($operation == '/') echo 'SELECTED'?>>/</option>
          </select>
 
-        <!-- display second input box, sanitizing any input value -->
+        <!-- display second input box, retaining any valid input value, sanitized of course -->
         <label>Input 2:
-            <input type='text' name='Input2' <?php if (isset($_GET['Input2']) && is_numeric($_GET['Input2'])) echo "value=" . sanitize($_GET['Input2'])?>>
+            <input type='text' name='input2' <?php if (isset($_GET['input2']) && is_numeric($_GET['input2'])) echo "value=" . sanitize($_GET['input2'])?>>
         </label>
         <br><br>
 
         <!-- display decimals checkbox -->
         <fieldset class='checkboxes'>
-            <label><input type='checkbox' name='decimals[]' value='on' <?php if (strstr($cb_value, 'on')) echo 'CHECKED'?>> Show decimals in answer?</label>
+            <label><input type='checkbox' name='decimals' value='on' <?php if($form->isChosen('decimals')) echo 'CHECKED'?>> Show decimals in answer?</label>
         </fieldset>
         <br><br>
 
@@ -48,11 +48,19 @@
         <br><br>
 
         <!-- display either alert/error or the result -->
-        <?php if ($_GET) : ?>
-             <div class="alert <?=$alertType?>" role="alert">
-                 <?=$results?>
-             </div>
-         <?php endif; ?>
+        <?php if (!isset($results)) : ?>
+            <?php if (count($errors) > 0) : ?>
+               <div class='alert alert-danger'>
+                        <?php foreach ($errors as $error) :?>
+                            <?=$error?><br>
+                        <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
+        <?php else : ?>
+            <div class='alert alert-info'>
+                Answer is <?=$results?>.
+            </div>
+        <?php endif; ?>
     </form>
 
 </body>

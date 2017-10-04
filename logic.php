@@ -1,59 +1,46 @@
 <?php
 require('helpers.php');
+require('Form.php');
 
-$returnFlag = false;  // signal a return if inputs not valid
+$form = new DWA\Form($_GET);
 
-// get the desired operation and validate
-$operation = 'choose';
-if (isset($_GET['operation'])) {
+// operation always needs a value for display page
+if (isset($_GET['operation']))
+{
     $operation = $_GET['operation'];
-    if ($operation == 'choose') {
-        $alertType = 'alert-danger';
-        $results = 'Please choose an operation.';
-        $returnFlag = true;
-    } 
-}
-
-// validate numerical inputs
-if (!isset($_GET['Input1']) || !is_numeric($_GET['Input1']) || !isset($_GET['Input2']) || !is_numeric($_GET['Input2'])) {
-    $alertType = 'alert-danger';
-    $results = 'Both inputs must be numbers.';  
-    $returnFlag = true;
-}
-
-// store value of decimals checkbox
-if (!isset($_GET['decimals'])) {
-    $cb_value = 'off';
 } else {
-    $cb_value = 'on';
+    $operation = 'choose';
 }
 
-// if any invalid input, return
-if ($returnFlag) { return; }
+// validate form inputs
+if ($form->isSubmitted()) 
+{
+    $errors = $form->validate(
+        [
+            'operation' => 'isOperation',
+            'input1' => 'required|numeric',
+            'input2' => 'required|numeric',
+        ]
+    );
+}
 
-// now do the math and signal an info alert with the answer
-$input1 = (float) sanitize($_GET['Input1']);
-$input2 = (float) sanitize($_GET['Input2']);
-$alertType = 'alert-info';
+// if no errors, do the math
+if ($form->isSubmitted() && count($errors) == 0)
+{
+    $input1 = (float) sanitize($_GET['input1']);
+    $input2 = (float) sanitize($_GET['input2']);
 
-if (!isset($_GET['decimals'])) {
     if ($operation == '+') {
-        $results = "Answer is " . round($input1 + $input2) . ".";
-    } else if ($operation == '-') {
-        $results = "Answer is " . round($input1 - $input2) . ".";
-    } else if ($operation == "*") {
-        $results = "Answer is " . round($input1 * $input2) . ".";
+        $results = $input1 + $input2;
+    } elseif ($operation == '-') {
+        $results = $input1 - $input2;
+    } elseif ($operation == "*") {
+        $results = $input1 * $input2;
     } else {
-        $results = "Answer is " . round($input1 / $input2) . ".";
+        $results = $input1 / $input2;
     }
-} else {
-    if ($operation == '+') {
-        $results = "Answer is " . ($input1 + $input2) . ".";
-    } else if ($operation == '-') {
-        $results = "Answer is " . ($input1 - $input2) . ".";
-    } else if ($operation == "*") {
-        $results = "Answer is " . ($input1 * $input2) . ".";
-    } else {
-        $results = "Answer is " . ($input1 / $input2) . ".";
+
+    if (!$form->isChosen('decimals')) {
+        $results = round($results);
     }
 }
