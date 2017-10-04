@@ -24,7 +24,7 @@
 
         <!-- display operation dropdown -->
         <select name='operation' id='operation'>
-            <option value='choose'<?php if ($operation == 'choose') echo 'SELECTED'?>>choose</option>
+            <option value='choose' <?php if ($operation == 'choose') echo 'SELECTED'?>>choose</option>
             <option value='+' <?php if ($operation == '+') echo 'SELECTED'?>>+</option>
             <option value='-' <?php if ($operation == '-') echo 'SELECTED'?>>-</option>
             <option value='*' <?php if ($operation == '*') echo 'SELECTED'?>>*</option>
